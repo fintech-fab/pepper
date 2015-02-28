@@ -4,4 +4,7 @@ Route::get('/', function () {
     return '';
 });
 
-Route::post('/slack', 'SlackController@index');
+Route::post('/slack', [
+    'middleware' => 'slack',
+    'uses'       => 'SlackController@index',
+]);

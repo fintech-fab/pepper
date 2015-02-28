@@ -20,6 +20,14 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
 
     protected function makeParams($input = [])
     {
+
+        $trigger = !empty($input['trigger']) ? $input['trigger'] : 'slackbot';
+        $text = !empty($input['text'])
+            ? $input['text']
+            : (
+            !empty($input['trigger']) ? $input['trigger'] . ' parameter' : $trigger . ' parameter'
+            );
+
         $params = [
             'token'        => 'XXXXXXXXXXXXXXXXXX',
             'team_id'      => 'T0001',
@@ -27,9 +35,9 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
             'channel_name' => 'test',
             'timestamp'    => microtime(true),
             'user_id'      => 'user',
-            'user_name'    => 'Steve',
-            'text'         => 'slackbot What is the air-speed velocity of an unladen swallow?',
-            'trigger_word' => !empty($input['trigger']) ? $input['trigger'] : 'slackbot',
+            'user_name'    => 'Pepper User',
+            'text'         => $text,
+            'trigger_word' => $trigger,
         ];
 
         $params = array_merge($params, $input);

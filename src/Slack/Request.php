@@ -29,27 +29,26 @@ class Request
         return $this->input->trigger === $trigger;
     }
 
+    public function param($name)
+    {
+        return $this->input->$name;
+    }
+
+
+    public function getSlackId()
+    {
+        return $this->input->user_id;
+    }
+
+
+    public function getUserName()
+    {
+        return $this->input->user_name;
+    }
 
     public function getPublicData()
     {
-        $result = $this->input->getPublicData();
-
-        return $this->toFields($result);
-    }
-
-    public function toFields($a)
-    {
-
-        $fields = [];
-        foreach ($a as $key => $value) {
-            $fields[] = [
-                'title' => $key,
-                'value' => $value,
-                'short' => false,
-            ];
-        }
-
-        return $fields;
+        return $this->input->getPublicData();
     }
 
 }
