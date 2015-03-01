@@ -101,4 +101,16 @@ class UserComponent
         }
     }
 
+    /**
+     * @param string $id
+     *
+     * @return UserComponent
+     */
+    public function initById($id)
+    {
+        $this->user = User::find($id);
+
+        return $this;
+    }
+
 }

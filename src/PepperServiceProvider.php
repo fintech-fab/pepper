@@ -1,9 +1,13 @@
 <?php namespace FintechFab\Pepper;
 
+use App\Http\Controllers\SlackController;
 use FintechFab\Pepper\Redmine\RedmineApi;
 use FintechFab\Pepper\Slack\Components\UserComponent;
+use FintechFab\Pepper\Web\Controllers\WebController;
 use Illuminate\Support\ServiceProvider;
 use Redmine\Client;
+use Route;
+use View;
 
 class PepperServiceProvider extends ServiceProvider
 {
@@ -13,6 +17,16 @@ class PepperServiceProvider extends ServiceProvider
     }
 
     public function register()
+    {
+
+        $this->bindings();
+        $this->routes();
+        $this->views();
+
+    }
+
+
+    private function bindings()
     {
 
         // RedmineApi Api Client
@@ -33,7 +47,36 @@ class PepperServiceProvider extends ServiceProvider
             return new RedmineApi();
         });
 
+    }
+
+    private function routes()
+    {
+
+        Route::post('/slack', [
+            'middleware' => 'slack',
+            'uses'       => SlackController::class . '@index',
+        ]);
+
+        Route::group([
+            'prefix'     => 'web',
+            'middleware' => 'web.auth',
+        ], function () {
+
+            Route::get('users', WebController::class . '@users');
+            Route::get('user/{id}/settings', WebController::class . '@settings');
+            Route::post('user/{id}/settings', WebController::class . '@postSettings');
+
+        });
 
     }
+
+    private function views()
+    {
+
+        View::addNamespace('web', app_path('/../src/Web/Views'));
+        View::addExtension('php', 'php');
+
+    }
+
 
 }

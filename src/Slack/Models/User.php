@@ -8,6 +8,7 @@ use Moloquent;
 /**
  * Class User
  *
+ * @property string      $id
  * @property string      $name
  * @property string      $slack_id
  * @property UserRedmine redmine

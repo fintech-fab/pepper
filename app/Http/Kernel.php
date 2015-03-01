@@ -1,5 +1,7 @@
 <?php namespace App\Http;
 
+use App\Http\Middleware\Slack;
+use App\Http\Middleware\WebAuth;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -11,11 +13,11 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
-        'Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode',
-        'Illuminate\Cookie\Middleware\EncryptCookies',
-        'Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse',
-        'Illuminate\Session\Middleware\StartSession',
-        'Illuminate\View\Middleware\ShareErrorsFromSession',
+        //'Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode',
+        //'Illuminate\Cookie\Middleware\EncryptCookies',
+        //'Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse',
+        //'Illuminate\Session\Middleware\StartSession',
+        //'Illuminate\View\Middleware\ShareErrorsFromSession',
         //'App\Http\Middleware\VerifyCsrfToken',
     ];
 
@@ -28,7 +30,8 @@ class Kernel extends HttpKernel
         'auth'       => 'App\Http\Middleware\Authenticate',
         'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
         'guest'      => 'App\Http\Middleware\RedirectIfAuthenticated',
-        'slack' => 'App\Http\Middleware\Slack',
+        'slack'    => Slack::class,
+        'web.auth' => WebAuth::class,
     ];
 
 }
