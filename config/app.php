@@ -1,8 +1,11 @@
 <?php
 
+
+use FintechFab\Pepper\PepperServiceProvider;
+
 return [
 
-    'debug'           => env('APP_DEBUG'),
+    'debug'           => env('APP_DEBUG', false),
     'url'             => env('APP_URL'),
     'timezone'        => 'Europe/Moscow',
     'locale'          => 'ru',
@@ -44,6 +47,8 @@ return [
 
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
         'Jenssegers\Mongodb\MongodbServiceProvider',
+
+        PepperServiceProvider::class,
 
     ],
 

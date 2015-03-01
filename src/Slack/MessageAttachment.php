@@ -31,7 +31,19 @@ class MessageAttachment
      */
     public function title($title)
     {
-        $this->attachment = $title;
+        $this->attachment['title'] = $title;
+
+        return $this;
+    }
+
+    /**
+     * @param string $link
+     *
+     * @return MessageAttachment
+     */
+    public function link($link)
+    {
+        $this->attachment['title_link'] = $link;
 
         return $this;
     }
@@ -44,9 +56,11 @@ class MessageAttachment
     /**
      * @param array $fields
      *
+     * @param bool $short
+     *
      * @return MessageAttachment
      */
-    public function fields($fields)
+    public function fields($fields, $short = true)
     {
 
         $this->attachment['fields'] = [];
@@ -54,7 +68,7 @@ class MessageAttachment
             $this->attachment['fields'][] = [
                 'title' => $key,
                 'value' => $value,
-                'short' => false,
+                'short' => $short,
             ];
         }
 

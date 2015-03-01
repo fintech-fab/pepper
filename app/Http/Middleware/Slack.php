@@ -19,10 +19,14 @@ class Slack
         $text = trim(\Input::get('text'));
         $trigger = trim(\Input::get('trigger_word'));
 
-        if (!$text || !$trigger || strpos($text, $trigger . ' ') !== 0) {
+        if (empty($text) || empty($trigger) || strpos($text, $trigger . ' ') !== 0) {
             return \Response::make();
         }
 
+        $token = \Input::get('token');
+        if (empty($token) || $token !== \Config::get('slack.token')) {
+            return \Response::make();
+        }
 
         return $next($request);
     }

@@ -17,6 +17,20 @@ class HelpTest extends TestCase
 
     }
 
+    public function testBadToken()
+    {
+
+        $this->slack([
+            'trigger' => 'help',
+            'text'    => 'help some',
+            'token'   => 'some-token',
+        ]);
+
+        $this->assertResponseOk();
+        $this->assertEquals('', $this->response->getContent());
+
+    }
+
     public function testHelp()
     {
 

@@ -8,6 +8,7 @@ use FintechFab\Pepper\Slack\Components\UserComponent;
 use FintechFab\Pepper\Slack\Message;
 use FintechFab\Pepper\Slack\MessageAttachment;
 use FintechFab\Pepper\Slack\Request;
+use FintechFab\Pepper\Slack\Triggers\Redmine;
 use Response;
 
 class SlackController extends Controller
@@ -31,14 +32,20 @@ class SlackController extends Controller
 
             case 'help':
                 /** @noinspection PhpIncludeInspection */
-                return require(app_path('/../static/help.md'));
+                return Response::make(require(app_path('/../static/help.md')));
                 break;
 
 
             case 'touch':
                 return $this->touch();
+                break;
 
 
+            case 'redmine':
+                $trigger = new Redmine($this->request);
+                $trigger->fire();
+
+                return $this->response($trigger->response());
                 break;
 
         }

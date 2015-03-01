@@ -34,6 +34,14 @@ class Request
         return $this->input->$name;
     }
 
+    public function getParameters()
+    {
+        $text = $this->input->text;
+        $text = explode(' ', $text);
+        unset($text[0]);
+
+        return array_values($text);
+    }
 
     public function getSlackId()
     {

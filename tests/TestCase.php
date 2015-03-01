@@ -56,4 +56,11 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
         return $this->call('post', '/slack', $this->makeParams($input));
     }
 
+
+    public function tearDown()
+    {
+        parent::tearDown();
+        Mockery::close();
+    }
+
 }
