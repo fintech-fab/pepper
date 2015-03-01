@@ -29,7 +29,7 @@ class RequestModel
         $this->data = $data;
         $this->trigger = !empty($data['trigger_word'])
             ? $data['trigger_word']
-            : 'help';
+            : explode(' ', $data['text'])[0];
     }
 
     public function __get($name)

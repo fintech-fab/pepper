@@ -21,9 +21,8 @@ class HelpTest extends TestCase
     {
 
         $this->slack([
-            'trigger' => 'help',
-            'text'    => 'help some',
-            'token'   => 'some-token',
+            'text'  => 'help some',
+            'token' => 'some-bad-token',
         ]);
 
         $this->assertResponseOk();
@@ -36,6 +35,7 @@ class HelpTest extends TestCase
 
         $this->slack([
             'trigger' => 'help',
+            'text' => 'help',
         ]);
 
         $this->assertResponseOk();
@@ -47,7 +47,7 @@ class HelpTest extends TestCase
     {
 
         $res = $this->slack([
-            'trigger' => 'touch',
+            'text' => 'touch',
         ]);
 
         $this->assertResponseOk();

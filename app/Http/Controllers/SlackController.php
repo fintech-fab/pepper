@@ -27,7 +27,6 @@ class SlackController extends Controller
     public function index()
     {
 
-
         switch ($this->request->trigger()) {
 
             case 'help':

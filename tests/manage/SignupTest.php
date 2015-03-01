@@ -21,7 +21,7 @@ class SignupTest extends TestCase
         $params = $this->makeParams();
 
         $this->slack([
-            'trigger' => 'touch',
+            'text' => 'touch',
         ]);
 
         $user = UserComponent::instance()->initBySlackId($params['user_id'])->get();
@@ -39,7 +39,6 @@ class SignupTest extends TestCase
         $this->mockRedmine(321);
         $this->slack([
             'text'    => 'redmine set.key redmine-key-value',
-            'trigger' => 'redmine',
             'user_id' => 'test-redmine',
         ]);
 

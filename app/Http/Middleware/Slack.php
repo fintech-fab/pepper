@@ -20,8 +20,11 @@ class Slack
 
         $text = trim(\Input::get('text'));
         $trigger = trim(\Input::get('trigger_word'));
+        if (!empty($text) && empty($trigger)) {
+            $trigger = explode(' ', $text)[0];
+        }
 
-        if (empty($text) || empty($trigger) || strpos($text, $trigger . ' ') !== 0) {
+        if (empty($text) || empty($trigger) || strpos($text, $trigger) !== 0) {
             $this->traceRequest('bad trigger');
             return \Response::make();
         }
