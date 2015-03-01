@@ -13,6 +13,8 @@ class Redmine extends BaseTrigger
 
     public function fire()
     {
+        parent::fire();
+
         switch ($this->param(0)) {
 
             case 'set.key':

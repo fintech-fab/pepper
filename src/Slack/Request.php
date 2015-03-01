@@ -17,6 +17,10 @@ class Request
         $input = array_map('trim', $input);
         $this->input = new RequestModel($input);
 
+        if (\Config::get('slack.trace')) {
+            \Log::debug('slack trace input', $input);
+        }
+
         return $this;
     }
 

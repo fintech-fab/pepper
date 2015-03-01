@@ -56,6 +56,11 @@ class SlackController extends Controller
 
     private function response($data)
     {
+
+        if (\Config::get('slack.trace')) {
+            \Log::debug('slack trace controller response', $data ? $data : []);
+        }
+
         return Response::json($data);
     }
 

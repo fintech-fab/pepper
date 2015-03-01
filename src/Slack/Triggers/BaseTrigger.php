@@ -10,9 +10,19 @@ use FintechFab\Pepper\Slack\Request;
 class BaseTrigger
 {
 
+    /**
+     * @var Request
+     */
     private $request;
+
+    /**
+     * @var array
+     */
     private $response;
 
+    /**
+     * @var array
+     */
     protected $parameters;
 
     /**
@@ -36,6 +46,15 @@ class BaseTrigger
 
     public function response()
     {
+
+        if (!$this->response) {
+            $this->response = '';
+        }
+
+        if (\Config::get('slack.trace')) {
+            \Log::debug('slack trace trigger response', $this->response ? $this->response : []);
+        }
+
         return $this->response;
     }
 
@@ -45,6 +64,15 @@ class BaseTrigger
         return isset($this->parameters[$num])
             ? $this->parameters[$num]
             : null;
+    }
+
+    public function fire()
+    {
+
+        if (\Config::get('slack.trace')) {
+            \Log::debug('slack trace parameters', $this->parameters);
+        }
+
     }
 
 }

@@ -1,6 +1,8 @@
 <?php namespace App\Http\Middleware;
 
 use Closure;
+use Input;
+use Log;
 
 class Slack
 {
@@ -20,15 +22,25 @@ class Slack
         $trigger = trim(\Input::get('trigger_word'));
 
         if (empty($text) || empty($trigger) || strpos($text, $trigger . ' ') !== 0) {
+            $this->traceRequest('bad trigger');
             return \Response::make();
         }
 
         $token = \Input::get('token');
         if (empty($token) || $token !== \Config::get('slack.token')) {
+            $this->traceRequest('bad token');
             return \Response::make();
         }
 
         return $next($request);
+    }
+
+
+    private function traceRequest($message)
+    {
+        if (\Config::get('slack.trace')) {
+            Log::debug($message, Input::all());
+        }
     }
 
 }

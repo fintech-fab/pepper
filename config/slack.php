@@ -9,4 +9,6 @@ return [
         'enabled' => env('SLACK_USER_ID_LIST'),
     ],
 
+    'trace' => env('SLACK_DEBUG_TRACE', false),
+
 ];
