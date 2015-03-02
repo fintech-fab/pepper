@@ -31,7 +31,14 @@ class SlackController extends Controller
 
             case 'help':
                 /** @noinspection PhpIncludeInspection */
-                return Response::make(require(app_path('/../static/help.md')));
+                ob_start();
+                require(app_path('/../static/help.md'));
+                $text = ob_get_clean();
+
+                return $this->response([
+                    'text'   => '```' . $text . '```',
+                    'mrkdwn' => true,
+                ]);
                 break;
 
 

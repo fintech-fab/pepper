@@ -33,13 +33,13 @@ class HelpTest extends TestCase
     public function testHelp()
     {
 
-        $this->slack([
+        $res = $this->slack([
             'trigger' => 'help',
             'text' => 'help',
         ]);
 
         $this->assertResponseOk();
-        $this->assertEquals('1', $this->response->getContent());
+        $this->assertNotEmpty($res->getData());
 
     }
 
