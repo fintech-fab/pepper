@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Http\Middleware\WebAuthMe;
 use FintechFab\Pepper\Slack\Components\UserComponent;
 use FintechFab\Pepper\Slack\Message;
 use FintechFab\Pepper\Slack\MessageAttachment;
@@ -73,18 +74,25 @@ class SlackController extends Controller
     private function touch()
     {
 
-        UserComponent::create([
-            'slack_id' => $this->request->getSlackId(),
-            'name'     => $this->request->getUserName(),
-        ]);
+        $user = UserComponent::instance()->initBySlackId($this->request->getSlackId());
+        if (!$user->get()) {
+            UserComponent::create([
+                'slack_id' => $this->request->getSlackId(),
+                'name'     => $this->request->getUserName(),
+            ]);
+            $user = UserComponent::instance()->initBySlackId($this->request->getSlackId());
+        }
 
-        $message = Message::create()
-            ->text('Познай самого себя')
+        $key = WebAuthMe::createKey($user->get()->id);
+        $result = Message::create()
+            ->text('<' . WebAuthMe::createUrl($key) . '|Познай самого себя>')
             ->attach(
                 MessageAttachment::create()->fields($this->request->getPublicData())
-            )->toArray();
+            )->send2User($this->request->getUserName());
 
-        return $this->response($message);
+        return $this->response([
+            'text' => $result
+        ]);
     }
 
 }

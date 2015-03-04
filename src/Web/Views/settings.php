@@ -18,7 +18,7 @@ if (!$redmine) {
 
 
 <!--suppress ALL -->
-<form action="/web/user/<?= $user->id ?>/settings" method="POST">
+<form action="" method="POST">
 
     <table style="border: 0; border-collapse: collapse;">
         <tr>

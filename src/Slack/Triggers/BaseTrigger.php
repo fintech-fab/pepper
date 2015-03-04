@@ -75,4 +75,14 @@ class BaseTrigger
 
     }
 
+    /**
+     * id автора сообщения
+     *
+     * @return string
+     */
+    public function getRequestUserName()
+    {
+        return $this->request->getUserName();
+    }
+
 }

@@ -1,10 +1,12 @@
 <?php namespace FintechFab\Pepper;
 
 use App\Http\Controllers\SlackController;
+use App\Http\Middleware\WebAuthMe;
 use FintechFab\Pepper\Redmine\RedmineApi;
 use FintechFab\Pepper\Slack\Components\UserComponent;
 use FintechFab\Pepper\Web\Controllers\WebController;
 use Illuminate\Support\ServiceProvider;
+use Redirect;
 use Redmine\Client;
 use Route;
 use View;
@@ -63,6 +65,22 @@ class PepperServiceProvider extends ServiceProvider
         ], function () {
 
             Route::get('users', WebController::class . '@users');
+            Route::get('user/{id}/settings', WebController::class . '@settings');
+            Route::post('user/{id}/settings', WebController::class . '@postSettings');
+
+        });
+
+        Route::group([
+            'prefix'     => 'web/me',
+            'middleware' => 'web.auth.me',
+        ], function () {
+
+            Route::get('auth/{key}', function ($key) {
+                $cookie = WebAuthMe::cookie($key, '/web/me/user');
+                $id = WebAuthMe::parseKey($key);
+
+                return Redirect::to('/web/me/user/' . $id . '/settings')->withCookie($cookie);
+            });
             Route::get('user/{id}/settings', WebController::class . '@settings');
             Route::post('user/{id}/settings', WebController::class . '@postSettings');
 

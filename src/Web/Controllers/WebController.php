@@ -7,6 +7,7 @@ namespace FintechFab\Pepper\Web\Controllers;
 use App\Http\Controllers\Controller;
 use FintechFab\Pepper\Slack\Components\UserComponent;
 use FintechFab\Pepper\Slack\Models\User;
+use Request;
 use View;
 
 class WebController extends Controller
@@ -39,7 +40,7 @@ class WebController extends Controller
         $redmineKey = trim($redmineKey);
         $user->setRedmineKey($redmineKey);
 
-        return \Redirect::to('/web/user/' . $id . '/settings');
+        return \Redirect::to(Request::url());
 
     }
 

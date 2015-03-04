@@ -11,4 +11,8 @@ return [
 
     'trace' => env('SLACK_DEBUG_TRACE', false),
 
+    'incoming' => [
+        'url' => env('SLACK_INCOMING_URL'),
+    ],
+
 ];

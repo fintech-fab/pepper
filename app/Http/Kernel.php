@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\Slack;
 use App\Http\Middleware\WebAuth;
+use App\Http\Middleware\WebAuthMe;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -27,11 +28,12 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth'       => 'App\Http\Middleware\Authenticate',
-        'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
-        'guest'      => 'App\Http\Middleware\RedirectIfAuthenticated',
-        'slack'    => Slack::class,
-        'web.auth' => WebAuth::class,
+        'auth'        => 'App\Http\Middleware\Authenticate',
+        'auth.basic'  => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
+        'guest'       => 'App\Http\Middleware\RedirectIfAuthenticated',
+        'slack'       => Slack::class,
+        'web.auth'    => WebAuth::class,
+        'web.auth.me' => WebAuthMe::class,
     ];
 
 }

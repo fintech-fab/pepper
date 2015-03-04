@@ -39,7 +39,7 @@ class Redmine extends BaseTrigger
         $issues = $api->myLastIssues($redmine->user_id);
 
         $message = new Message();
-        $message->text('Мои задачи');
+        $message->text('Твои задачи');
 
         foreach ($issues as $item) {
             $message->attach(
@@ -57,7 +57,10 @@ class Redmine extends BaseTrigger
             );
         }
 
-        $this->setResponse($message->toArray());
+        $result = $message->send2User($this->getRequestUserName());
+        $this->setResponse([
+            'text' => $result,
+        ]);
 
     }
 
